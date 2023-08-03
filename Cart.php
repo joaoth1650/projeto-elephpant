@@ -4,6 +4,7 @@ class Cart
 {
   public string $meuNome = 'joao';
   public function add(Product $product)
+  
   {
     $inCart = false;
     $this->setTotal($product);

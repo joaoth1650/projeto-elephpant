@@ -25,8 +25,7 @@ if (isset($_GET['id'])) {
   $product->setPrice($productInfo['price']);
   $product->setQuantity($productInfo['quantity']);
 
-  $cart = new Cart;
-  $cart->add($product);
+  (new Cart)->add($product);
   header('Location: index.php');
 }
 
@@ -49,6 +48,20 @@ if (isset($_GET['id'])) {
   </div>
   <div class="container card mt-3">
     <ul class="list-group list-group-flush">
+      <?php 
+        if(count($productsInCart) < 4 ){
+        echo "<body>   
+          <ul class='list-group list-group-flush'>
+            <li class='list-group-item'>Geladeira R$ 1000  <a href='?id=1'>Add</a></li>
+            <li class='list-group-item'>Mouse R$ 2000  <a href='?id=2'>Add</a></li>
+            <li class='list-group-item'>Teclado R$ 100  <a href='?id=3'>Add</a></li>
+            <li class='list-group-item'>Monitor $$ 50  <a href='?id=4'>Add</a></li>
+          </ul>
+        </body>" ;
+        }
+
+        // var_dump($productsInCart);
+      ?>
       <?php foreach ($productsInCart as $producte) : ?>
         <div class="d-flex justify-content-end">
           <div class="text-primary fs-5"><?= $producte->getQuantity(); ?></div>
@@ -61,6 +74,7 @@ if (isset($_GET['id'])) {
           <a href="?id=<?= $p['id'] ?>">Add</a>
         </li>
       <?php endforeach; ?>
+      
     </ul>
   </div>
 </body>
