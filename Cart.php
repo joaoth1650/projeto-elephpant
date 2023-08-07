@@ -4,7 +4,7 @@ class Cart
 {
   public string $meuNome = 'joao';
   public function add(Product $product)
-  
+
   {
     $inCart = false;
     $this->setTotal($product);
@@ -32,11 +32,16 @@ class Cart
   }
   public function remove(int $id)
   {
-    if(isset($_SESSION['cart']['products'])){
-      foreach($this->getCart() as $index => $product){
-        if($product->getId() === $id){
-          unset($_SESSION['cart']['products'][$index]);
-          $_SESSION['cart']['total'] -= $product->getPrice() * $product->getQuantity();
+    if (isset($_SESSION['cart']['products'])) {
+      foreach ($this->getCart() as $index => $product) {
+        if ($product->getId() === $id) {
+          if ($product->getQuantity() > 1) {
+            $product->setQuantity($product->getQuantity() - 1);
+             //setQuantity = getQuantity(//quantidade atual) - 1 
+          } else { 
+            unset($_SESSION['cart']['products'][$index]);
+          }
+          $_SESSION['cart']['total'] -= $product->getPrice();
         }
       }
     }
@@ -47,6 +52,6 @@ class Cart
   }
   public function getTotal()
   {
-    return $_SESSION['cart']['total']?? 0;
+    return $_SESSION['cart']['total'] ?? 0;
   }
 }

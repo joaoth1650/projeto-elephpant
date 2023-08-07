@@ -43,38 +43,44 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
-  <div class="d-flex justify-content-end">
-    <button class="btn btn btn-outline-warning"><a href="/mycart.php">Go to cart</a></button>
+  <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-center">
+      <button class="btn btn btn-outline-warning"><a href="/addProduct.php">add new product</a></button>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn btn-outline-warning"><a href="/mycart.php">Go to cart</a></button>
+    </div>
   </div>
   <div class="container card mt-3">
     <ul class="list-group list-group-flush">
-      <?php 
-        if(count($productsInCart) < 4 ){
+      <?php
+      $contandoCar = 0;
+      if (count($productsInCart) < 4 || empty($productsInCart)) {
         echo "<body>   
           <ul class='list-group list-group-flush'>
-            <li class='list-group-item'>Geladeira R$ 1000  <a href='?id=1'>Add</a></li>
-            <li class='list-group-item'>Mouse R$ 2000  <a href='?id=2'>Add</a></li>
-            <li class='list-group-item'>Teclado R$ 100  <a href='?id=3'>Add</a></li>
-            <li class='list-group-item'>Monitor $$ 50  <a href='?id=4'>Add</a></li>
+            <li class='list-group-item'>Geladeira R$ 1000  <a href='?id=1' onClick='" . $contandoCar++ . "'>Add</a></li>
+            <li class='list-group-item'>Mouse R$ 2000  <a href='?id=2' onClick='" . $contandoCar++ . "'>Add</a></li>
+            <li class='list-group-item'>Teclado R$ 100  <a href='?id=3' onClick='" . $contandoCar++ . "'>Add</a></li>
+            <li class='list-group-item'>Monitor $50 <a href='?id=4' onClick='" . $contandoCar++ . "'>Add</a></li>
           </ul>
-        </body>" ;
-        }
-
-        // var_dump($productsInCart);
+        </body>";
+      }
       ?>
-      <?php foreach ($productsInCart as $producte) : ?>
-        <div class="d-flex justify-content-end">
-          <div class="text-primary fs-5"><?= $producte->getQuantity(); ?></div>
-        </div>
-        <?php 
-        $p = $products[$producte->getId()]
-        ?>
-        <li class="list-group-item">
-          <?= $p['name'] ?> R$ <?= $p['price'] ?>
-          <a href="?id=<?= $p['id'] ?>">Add</a>
-        </li>
-      <?php endforeach; ?>
-      
+
+      <?php if (count($productsInCart) == 4) : ?>
+        <?php foreach ($productsInCart as $producte) : ?>
+          <div class="d-flex justify-content-end">
+            <div class="text-primary fs-5"><?= $producte->getQuantity(); ?></div>
+          </div>
+          <?php
+          $p = $products[$producte->getId()]
+          ?>
+          <li class="list-group-item">
+            <?= $p['name'] ?> R$ <?= $p['price'] ?>
+            <a href="?id=<?= $p['id'] ?>">Add</a>
+          </li>
+        <?php endforeach; ?>
+      <?php endif ?>
     </ul>
   </div>
 </body>
