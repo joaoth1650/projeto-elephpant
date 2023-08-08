@@ -70,7 +70,7 @@ if (isset($_GET['id'])) {
       <?php if (count($productsInCart) == 4) : ?>
         <?php foreach ($productsInCart as $producte) : ?>
           <div class="d-flex justify-content-end">
-            <div class="text-primary fs-5"><?= $producte->getQuantity(); ?></div>
+            <div class="text-primary fs-5">🛒:<?= $producte->getQuantity(); ?></div>
           </div>
           <?php
           $p = $products[$producte->getId()]
